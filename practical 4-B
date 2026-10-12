@@ -1,0 +1,48 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int calc(char op, int op1, int op2)
+{
+    switch(op)
+    {
+        case '+': return op1 + op2;
+        case '-': return op1 - op2;
+        case '*': return op1 * op2;
+        case '/': return op1 / op2;
+    }
+    return 0;
+}
+
+int main()
+{
+    string post;
+    stack<int> s;
+
+    cout << "Enter postfix expression: ";
+    cin >> post;
+
+    for(int i = 0; i < post.length(); i++)
+    {
+        if(isdigit(post[i]))
+        {
+            s.push(post[i] - '0');
+        }
+        else
+        {
+            int op2 = s.top();
+            s.pop();
+
+            int op1 = s.top();
+            s.pop();
+
+            int x = calc(post[i], op1, op2);
+            s.push(x);
+        }
+    }
+
+    cout << "Result = " << s.top();
+
+    return 0;
+}
